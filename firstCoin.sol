@@ -1,25 +1,25 @@
 pragma solidity >=0.4.0 <0.6.0;
 
-contract yogacoin{
+contract Firstcoin{
      
-    address public minter;
+    address public owner;
     
     mapping(address=>uint) public balances;
 
     event sent(address from, address to, uint amount);
     
     constructor() public{
-        minter = msg.sender;
+        owner = msg.sender;
     }
 
-    function mint(address reciever, uint amount) public{
-        require(msg.sender == minter,"Invalid sender.");
+    function transfer(address reciever, uint amount) public{
+        require(msg.sender == owner,"Invalid sender.");
         require(amount < 1e60,"Amount should be less then 1e60.");
         balances[reciever] += amount;
         balances[msg.sender] -= amount;
     }
 
-    function transfer(address reciever, uint amount) public{
+    function transferFrom(address reciever, uint amount) public{
         require(balances[msg.sender] >= amount,"Insufficient balance.");
         balances[msg.sender] -= amount;
         balances[reciever] += amount;
