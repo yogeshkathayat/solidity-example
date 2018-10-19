@@ -1,4 +1,4 @@
-pragma solidity >=0.4.0 <0.6.0;
+pragma solidity ^0.4.24;
 
 contract Firstcoin{
      
@@ -12,8 +12,16 @@ contract Firstcoin{
         owner = msg.sender;
     }
 
-    function transfer(address reciever, uint amount) public{
+    modifier onlyOwner {
         require(msg.sender == owner,"Invalid sender.");
+        _;
+    }
+
+    function transferOwnerShip(address newOwner) public onlyOwner{
+        owner = newOwner;
+    }
+
+    function transfer(address reciever, uint amount) public onlyOwner{
         require(amount < 1e60,"Amount should be less then 1e60.");
         balances[reciever] += amount;
         balances[msg.sender] -= amount;
